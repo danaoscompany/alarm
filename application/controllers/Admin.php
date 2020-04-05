@@ -1,5 +1,7 @@
 <?php
 
+include 'fcm.php';
+
 class Admin extends CI_Controller {
 
 	public function signup() {
@@ -29,6 +31,31 @@ class Admin extends CI_Controller {
 		$this->db->update('admins', array(
 			'fcm_token' => $fcmToken
 		));
+	}
+	
+	public function set_alarm() {
+	  $adminID = intval($this->input->post('admin_id'));
+	  $fcmToken = $this->db->get_where('users', array(
+	      'id' => $adminID
+	    ))->row_array()['fcm_token'];
+	  $on = intval($this->input->post('on'));
+	  $users = $this->db->get_where('users', array(
+	      'admin_id' => $adminID
+	    ))->result_array();
+	  $title = "";
+	  $clickAction = "";
+	  if ($on == 0) {
+	    $title = "Alarm mati";
+	    $clickAction = "com.prod.alarm.ALARM_OFF";
+	  } else if ($on == 1) {
+	    $title = "Alarm menyala";
+	    $clickAction = "com.prod.alarm.ALARM_ON";
+	  }
+	  for ($i=0; $i<sizeof($users); $i++) {
+	    $user = $users[$i];
+	    //$fcmToken = $user['fcm_token'];
+	    send_message($fcmToken, $title, 'Ketuk untuk melihat info', $clickAction);
+	  }
 	}
 	
 	public function switch_alarm() {
