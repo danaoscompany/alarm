@@ -65,17 +65,20 @@ class Main extends CI_Controller {
 			));
 		} else if ($role == 1) { // User
 			$adminCode = $this->input->post('admin_code');
-			if ($this->db->get_where('admins', array(
+			$result = $this->db->get_where('admins', array(
 					'code' => $adminCode
-				))->num_rows() > 0) {
+				))->result_array();
+			if (sizeof($result) <= 0) {
 				echo -2;
 				return;
 			}
+			$admin = $result[0];
 			$this->db->insert('users', array(
 				'name' => $name,
 				'email' => $email,
 				'password' => $password,
-				'admin_code' => $adminCode
+				'admin_code' => $adminCode,
+				'admin_id' => intval($admin['id'])
 			));
 		}
 		echo 1;
