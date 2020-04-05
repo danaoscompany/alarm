@@ -117,6 +117,8 @@ class Main extends CI_Controller {
 	  $token = $this->db->get_where('admins', array(
 	      'id' => $adminID
 	    ))->row_array()['fcm_token'];
-	  send_message($token, 'Judul pesan', 'Isi pesan', 'myaction');
+	  send_message($token, 'Judul pesan', 'Isi pesan', 'myaction', array(
+	      'name' => 'Dana'
+	    ));
 	}
 }
