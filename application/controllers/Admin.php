@@ -25,7 +25,7 @@ class Admin extends CI_Controller {
 	}
 	
 	public function update_fcm_token() {
-		$adminID = intval($this->input->post('admin_id'));
+		$adminID = intval($this->input->post('user_id'));
 		$fcmToken = $this->input->post('token');
 		$this->db->where('id', $adminID);
 		$this->db->update('admins', array(
