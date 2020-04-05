@@ -40,8 +40,8 @@ class Admin extends CI_Controller {
 	      'id' => $adminID
 	    ))->row_array()['fcm_token'];
 	  $on = intval($this->input->post('on'));
-	  $users = $this->db->get_where('users', array(
-	      'admin_id' => $adminID
+	  $users = $this->db->get_where('admins', array(
+	      'id' => $adminID
 	    ))->result_array();
 	  $title = "";
 	  $clickAction = "";
@@ -54,7 +54,7 @@ class Admin extends CI_Controller {
 	  }
 	  for ($i=0; $i<sizeof($users); $i++) {
 	    $user = $users[$i];
-	    //$fcmToken = $user['fcm_token'];
+	    $fcmToken = $user['fcm_token'];
 	    send_message($fcmToken, $title, 'Ketuk untuk melihat info', $clickAction, array(
 	        'alarm_type' => $alarmType
 	      ));
