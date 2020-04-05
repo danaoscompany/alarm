@@ -36,7 +36,7 @@ class Admin extends CI_Controller {
 	public function set_alarm() {
 	  $adminID = intval($this->input->post('admin_id'));
 	  $alarmType = intval($this->input->post('alarm_type'));
-	  $fcmToken = $this->db->get_where('users', array(
+	  $fcmToken = $this->db->get_where('admins', array(
 	      'id' => $adminID
 	    ))->row_array()['fcm_token'];
 	  $on = intval($this->input->post('on'));
