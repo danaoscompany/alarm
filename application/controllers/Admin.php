@@ -36,9 +36,6 @@ class Admin extends CI_Controller {
 	public function set_alarm() {
 	  $adminID = intval($this->input->post('admin_id'));
 	  $alarmType = intval($this->input->post('alarm_type'));
-	  $fcmToken = $this->db->get_where('admins', array(
-	      'id' => $adminID
-	    ))->row_array()['fcm_token'];
 	  $on = intval($this->input->post('on'));
 	  $users = $this->db->get_where('admins', array(
 	      'id' => $adminID
@@ -56,7 +53,7 @@ class Admin extends CI_Controller {
 	    $user = $users[$i];
 	    $fcmToken = $user['fcm_token'];
 	    send_message($fcmToken, $title, 'Ketuk untuk melihat info', $clickAction, array(
-	        'alarm_type' => $alarmType
+	        'alarm_type' => "" . $alarmType
 	      ));
 	  }
 	}
